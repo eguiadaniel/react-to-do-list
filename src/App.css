@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0 auto;
+  max-width: 40em;
+  line-height: 1.5;
+}
+
+input,
+button {
+  padding: 1em 0;
+  border: 0;
+}
+form {
+  border-bottom: 1px solid;
+  display: flex;
+}
+
+input {
+  flex: 1;
+}
