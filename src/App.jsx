@@ -1,14 +1,22 @@
 import React from 'react';
 import './App.css';
 
-class App extends React.Component {
-  state = {
-    newTask: '',
-    tasks: [
-      { id: '123', content: 'walk the dogs' },
-      { id: '456', content: 'shop for groceries' }
-    ]
-  };
+const TaskItem = (props) => {
+
+  const item = props.item;
+  // console.log(item);
+
+  return (
+  <li className="task">{item.content}>
+    <button onClick={props.onRemoveTask}>Done</button>
+  </li>
+  )
+}
+
+class TaskInput extends React.Component{
+  state= {
+    newTask: ''
+  }
 
   handleFormSubmission = (event) => {
     event.preventDefault();
@@ -21,24 +29,12 @@ class App extends React.Component {
       content: content
     };
 
-    this.setState({
-      tasks: [task, ...this.state.tasks],   
+    this.setState({      
       newTask:''
     })
 
-    // if (content) {
-    //   const task = {
-    //     id: id,
-    //     content: content
-    //   };
-    //   this.setState({
-    //     tasks: [task, ...this.state.tasks],   
-    //     newTask:''
-    //   })
-    // }
-
-    console.log(this.state.newTask);
-    console.log(this.state.tasks);
+    this.props.onTaskCreate(task);
+  
   };
 
   handleNewTaskChange = (event) => {
@@ -48,42 +44,60 @@ class App extends React.Component {
     });
   };
 
+
+  render() {
+    return (
+      <form onSubmit={this.handleFormSubmission}>
+      <label htmlFor="input-task"></label>
+      <input
+        type="text"
+        placeholder="new task here"
+        onChange={this.handleNewTaskChange}
+        value={this.state.newTask.content}
+      />
+      <button>Add to list</button>
+    </form>
+    )
+  }
+}
+
+class App extends React.Component {
+  state = {    
+    tasks: [
+      { id: '123', content: 'walk the dogs' },
+      { id: '456', content: 'shop for groceries' }
+    ]
+  };
+
+  createTask = (task) => {
+    this.setState({
+      tasks : [task, ...this.state.tasks]
+      
+    })
+  }
+
   handleDeleteTask = (id) => {
-    console.log(id);
+    // console.log(id);
     const copyOfTasks = [...this.state.tasks];
     const index = copyOfTasks.findIndex(element => element.id === id);
     copyOfTasks.splice(index, 1);
     this.setState({
       tasks: copyOfTasks
     });
-    console.log(index);
+    // console.log(index);
   };
 
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.handleFormSubmission}>
-          <label htmlFor="input-task"></label>
-          <input
-            type="text"
-            placeholder="new task here"
-            onChange={this.handleNewTaskChange}
-            value={this.state.newTask.content}
-          />
-          <button>Add to list</button>
-        </form>
+        <TaskInput onTaskCreate={this.createTask}/>
+      
         <h1>React-to-do-list</h1>
         <ul>
-          {this.state.tasks.map((item) => {
-            return (
-              <div key={item.id} className="task">
-                <li>{item.content}</li>
-                <button onClick={() => this.handleDeleteTask(item.id)}>
-                  Done
-                </button>
-              </div>
-            );
-          })}
+          {this.state.tasks.map((item) =>
+                <TaskItem key={item.id} item={item} onRemoveTask={() => this.handleDeleteTask(item.id)}/>
+               
+           )}
         </ul>
       </div>
     );

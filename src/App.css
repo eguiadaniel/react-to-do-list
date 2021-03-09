@@ -63,14 +63,9 @@ input {
 
 .task{
   display: flex;
-  margin-bottom: 1em;
-  /* border: solid 1px hsla(0, 0%, 50%, 0.37); */
-  list-style: none;
+  justify-content: space-between;
+  text-align: left;
   align-items: center;
-  background-color:  hsla(160, 100%, 69%, 0.13);
-
-}
-
-.task li{
- flex: 1
+  justify-content: space-between;
+  padding: 1em 0 0 1em
 }
