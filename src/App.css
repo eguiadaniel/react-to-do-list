@@ -43,10 +43,14 @@ body {
   line-height: 1.5;
 }
 
-input,
+input {}
+
 button {
-  padding: 1em 0;
+  padding: 1em 1em;
   border: 0;
+  border-radius: 5px;
+  background-color: aquamarine;
+  color: rgb(0, 179, 119);
 }
 form {
   border-bottom: 1px solid;
@@ -55,4 +59,18 @@ form {
 
 input {
   flex: 1;
+}
+
+.task{
+  display: flex;
+  margin-bottom: 1em;
+  /* border: solid 1px hsla(0, 0%, 50%, 0.37); */
+  list-style: none;
+  align-items: center;
+  background-color:  hsla(160, 100%, 69%, 0.13);
+
+}
+
+.task li{
+ flex: 1
 }

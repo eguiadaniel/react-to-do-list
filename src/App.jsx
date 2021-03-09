@@ -15,16 +15,29 @@ class App extends React.Component {
     const content = this.state.newTask;
     const id = Math.random().toString(36).substr(2, 9);
 
-    if (content) {
-      const task = {
-        id: id,
-        content: content
-      };
-      this.setState({
-        tasks: [task, ...this.state.tasks]
-      });
-    }
+    if (!content) return
+    const task = {
+      id: id,
+      content: content
+    };
 
+    this.setState({
+      tasks: [task, ...this.state.tasks],   
+      newTask:''
+    })
+
+    // if (content) {
+    //   const task = {
+    //     id: id,
+    //     content: content
+    //   };
+    //   this.setState({
+    //     tasks: [task, ...this.state.tasks],   
+    //     newTask:''
+    //   })
+    // }
+
+    console.log(this.state.newTask);
     console.log(this.state.tasks);
   };
 
@@ -38,11 +51,7 @@ class App extends React.Component {
   handleDeleteTask = (id) => {
     console.log(id);
     const copyOfTasks = [...this.state.tasks];
-    const index = copyOfTasks.findIndex((element) => {
-      if (element.id === id) {
-        return true;
-      }
-    });
+    const index = copyOfTasks.findIndex(element => element.id === id);
     copyOfTasks.splice(index, 1);
     this.setState({
       tasks: copyOfTasks
@@ -67,7 +76,7 @@ class App extends React.Component {
         <ul>
           {this.state.tasks.map((item) => {
             return (
-              <div key={item.id}>
+              <div key={item.id} className="task">
                 <li>{item.content}</li>
                 <button onClick={() => this.handleDeleteTask(item.id)}>
                   Done
